@@ -11,7 +11,17 @@
     <property name="datetimeType" value="datetime" dbms="postgresql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240827141848_added_entity_Usuario.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240827141849_added_entity_Permissao.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240827141850_added_entity_GrupoUsuario.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240827141851_added_entity_Noticia.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240827141852_added_entity_Categoria.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240827173937_added_entity_VinculoGrupoPermissao.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20240827141848_added_entity_constraints_Usuario.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240827141850_added_entity_constraints_GrupoUsuario.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240827141851_added_entity_constraints_Noticia.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240827173937_added_entity_constraints_VinculoGrupoPermissao.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

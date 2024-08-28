@@ -1,0 +1,32 @@
+{
+  "annotations": {
+    "changelogDate": "20240827173937"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "ativado",
+      "fieldType": "Boolean"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "VinculoGrupoPermissao",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "grupoUsuario",
+      "relationshipName": "grupoUsuario",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "permissao",
+      "relationshipName": "permissao",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
