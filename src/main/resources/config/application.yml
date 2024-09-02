@@ -214,3 +214,14 @@ jhipster:
 # ===================================================================
 
 # application:
+
+logging:
+  level:
+    root: INFO # Nível global de logging
+    org.springframework.web: DEBUG # Logging detalhado para o pacote Spring Web
+    com.seu.projeto: DEBUG # Substitua por seu pacote principal para capturar logs detalhados do seu código
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n' # Formato de saída no console
+  file:
+    name: application.log # Arquivo para onde os logs também serão direcionados
+
