@@ -4,6 +4,8 @@ import static com.infopulse.security.SecurityUtils.AUTHORITIES_KEY;
 import static com.infopulse.security.SecurityUtils.JWT_ALGORITHM;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.infopulse.service.UserService;
+import com.infopulse.service.dto.UserDTO;
 import com.infopulse.web.rest.vm.LoginVM;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -37,6 +39,7 @@ public class AuthenticateController {
     private static final Logger log = LoggerFactory.getLogger(AuthenticateController.class);
 
     private final JwtEncoder jwtEncoder;
+    private final UserService userService; // Injetar UserService para acessar dados do usuário
 
     @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds:0}")
     private long tokenValidityInSeconds;
@@ -46,13 +49,18 @@ public class AuthenticateController {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    public AuthenticateController(
+        JwtEncoder jwtEncoder,
+        AuthenticationManagerBuilder authenticationManagerBuilder,
+        UserService userService
+    ) {
         this.jwtEncoder = jwtEncoder;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.userService = userService;
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
+    public ResponseEntity<UserTokenResponse> authorize(@Valid @RequestBody LoginVM loginVM) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             loginVM.getUsername(),
             loginVM.getPassword()
@@ -60,18 +68,26 @@ public class AuthenticateController {
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Gera o JWT token
         String jwt = this.createToken(authentication, loginVM.isRememberMe());
+
+        // Pega os dados do usuário autenticado
+        String username = authentication.getName();
+        UserDTO userDTO = userService.getUserWithAuthoritiesByLogin(username).map(UserDTO::new).orElseThrow(); // Busca o UserDTO
+
+        String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+
+        // Adiciona o token no header
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(jwt);
-        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+
+        // Cria a resposta com o token e os dados do usuário
+        UserTokenResponse userTokenResponse = new UserTokenResponse(jwt, userDTO);
+
+        return new ResponseEntity<>(userTokenResponse, httpHeaders, HttpStatus.OK);
     }
 
-    /**
-     * {@code GET /authenticate} : check if the user is authenticated, and return its login.
-     *
-     * @param request the HTTP request.
-     * @return the login if the user is authenticated.
-     */
     @GetMapping("/authenticate")
     public String isAuthenticated(HttpServletRequest request) {
         log.debug("REST request to check if the current user is authenticated");
@@ -89,7 +105,6 @@ public class AuthenticateController {
             validity = now.plus(this.tokenValidityInSeconds, ChronoUnit.SECONDS);
         }
 
-        // @formatter:off
         JwtClaimsSet claims = JwtClaimsSet.builder()
             .issuedAt(now)
             .expiresAt(validity)
@@ -102,23 +117,34 @@ public class AuthenticateController {
     }
 
     /**
-     * Object to return as body in JWT Authentication.
+     * Classe para encapsular o token JWT e os dados do usuário autenticado.
      */
-    static class JWTToken {
+    static class UserTokenResponse {
 
         private String idToken;
+        private UserDTO user; // Agora inclui UserDTO
 
-        JWTToken(String idToken) {
+        UserTokenResponse(String idToken, UserDTO user) {
             this.idToken = idToken;
+            this.user = user;
         }
 
         @JsonProperty("id_token")
-        String getIdToken() {
+        public String getIdToken() {
             return idToken;
         }
 
-        void setIdToken(String idToken) {
+        public void setIdToken(String idToken) {
             this.idToken = idToken;
+        }
+
+        @JsonProperty("user")
+        public UserDTO getUser() {
+            return user;
+        }
+
+        public void setUser(UserDTO user) {
+            this.user = user;
         }
     }
 }
