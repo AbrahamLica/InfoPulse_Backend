@@ -57,8 +57,7 @@ public class Noticia implements Serializable {
     @Column(name = "imagem_content_type")
     private String imagemContentType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "noticias" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Categoria categoria;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "noticias")
