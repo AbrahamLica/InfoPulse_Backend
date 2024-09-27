@@ -41,6 +41,9 @@ public class Noticia implements Serializable {
     @Column(name = "data_publicacao", nullable = false)
     private Instant dataPublicacao;
 
+    @Column(name = "data_ultima_modificacao")
+    private Instant dataUltimaModificacao;
+
     @NotNull
     @Size(min = 2)
     @Column(name = "autor", nullable = false)
@@ -129,6 +132,19 @@ public class Noticia implements Serializable {
 
     public void setDataPublicacao(Instant dataPublicacao) {
         this.dataPublicacao = dataPublicacao;
+    }
+
+    public Instant getDataUltimaModificacao() {
+        return this.dataUltimaModificacao;
+    }
+
+    public Noticia dataUltimaModificacao(Instant dataUltimaModificacao) {
+        this.setDataUltimaModificacao(dataUltimaModificacao);
+        return this;
+    }
+
+    public void setDataUltimaModificacao(Instant dataUltimaModificacao) {
+        this.dataUltimaModificacao = dataUltimaModificacao;
     }
 
     public String getAutor() {

@@ -27,6 +27,8 @@ public class NoticiaDTO implements Serializable {
     @NotNull
     private Instant dataPublicacao;
 
+    private Instant dataUltimaModificacao;
+
     @NotNull
     @Size(min = 2)
     private String autor;
@@ -79,6 +81,14 @@ public class NoticiaDTO implements Serializable {
 
     public void setDataPublicacao(Instant dataPublicacao) {
         this.dataPublicacao = dataPublicacao;
+    }
+
+    public Instant getDataUltimaModificacao() {
+        return dataUltimaModificacao;
+    }
+
+    public void setDataUltimaModificacao(Instant dataUltimaModificacao) {
+        this.dataUltimaModificacao = dataUltimaModificacao;
     }
 
     public String getAutor() {
