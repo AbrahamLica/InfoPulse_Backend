@@ -11,12 +11,11 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface NoticiaMapper extends EntityMapper<NoticiaDTO, Noticia> {
-    @Mapping(target = "categoria", source = "categoria")
-    NoticiaDTO toDto(Noticia noticia);
+    @Mapping(target = "categoria", source = "categoria", qualifiedByName = "categoriaId")
+    NoticiaDTO toDto(Noticia s);
 
-    @Named("categoriaDetails")
+    @Named("categoriaId")
+    @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "nome", source = "nome")
-    @Mapping(target = "descricao", source = "descricao") // Aqui você pode mapear outros atributos da categoria
-    CategoriaDTO toDtoCategoria(Categoria categoria);
+    CategoriaDTO toDtoCategoriaId(Categoria categoria);
 }

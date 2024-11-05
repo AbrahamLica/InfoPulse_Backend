@@ -41,7 +41,7 @@ public class Noticia implements Serializable {
     @Column(name = "data_publicacao", nullable = false)
     private Instant dataPublicacao;
 
-    @Column(name = "data_ultima_modificacao")
+    @Column(name = "data_ultima_modificacao", nullable = false)
     private Instant dataUltimaModificacao;
 
     @NotNull
@@ -60,7 +60,8 @@ public class Noticia implements Serializable {
     @Column(name = "imagem_content_type")
     private String imagemContentType;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "noticias" }, allowSetters = true)
     private Categoria categoria;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "noticias")
@@ -135,16 +136,16 @@ public class Noticia implements Serializable {
     }
 
     public Instant getDataUltimaModificacao() {
-        return this.dataUltimaModificacao;
+        return dataUltimaModificacao;
+    }
+
+    public void setDataUltimaModificacao(Instant dataUltimaModificacao) {
+        this.dataUltimaModificacao = dataUltimaModificacao;
     }
 
     public Noticia dataUltimaModificacao(Instant dataUltimaModificacao) {
         this.setDataUltimaModificacao(dataUltimaModificacao);
         return this;
-    }
-
-    public void setDataUltimaModificacao(Instant dataUltimaModificacao) {
-        this.dataUltimaModificacao = dataUltimaModificacao;
     }
 
     public String getAutor() {

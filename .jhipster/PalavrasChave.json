@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "changelogDate": "20241024131218"
+  },
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "palavra",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "PalavrasChave",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "noticia",
+      "relationshipName": "noticia",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": []
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
