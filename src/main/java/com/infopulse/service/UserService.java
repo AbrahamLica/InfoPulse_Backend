@@ -291,4 +291,8 @@ public class UserService {
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).toList();
     }
+
+    public Optional<User> findOneByLogin(String email) {
+        return userRepository.findOneByLogin(email);
+    }
 }

@@ -44,6 +44,11 @@ public class SecurityConfiguration {
                 authz
                     .requestMatchers(mvc.pattern(HttpMethod.POST, "/api/authenticate")).permitAll()
                     .requestMatchers(mvc.pattern(HttpMethod.GET, "/api/authenticate")).permitAll()
+                    .requestMatchers(mvc.pattern(HttpMethod.GET, "/api/v1/usuarios")).permitAll()
+                    .requestMatchers(mvc.pattern(HttpMethod.POST, "/api/v1/usuarios")).permitAll()
+                    .requestMatchers(mvc.pattern(HttpMethod.PUT, "/api/v1/usuarios")).permitAll()
+                    .requestMatchers(mvc.pattern(HttpMethod.DELETE, "/api/v1/usuarios")).permitAll()
+                    .requestMatchers(mvc.pattern(HttpMethod.PATCH, "/api/v1/usuarios")).permitAll()
                     .requestMatchers(mvc.pattern("/api/register")).permitAll()
                     .requestMatchers(mvc.pattern("/api/activate")).permitAll()
                     .requestMatchers(mvc.pattern("/api/account/reset-password/init")).permitAll()

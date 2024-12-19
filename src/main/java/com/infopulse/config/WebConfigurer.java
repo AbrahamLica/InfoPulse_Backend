@@ -49,6 +49,8 @@ public class WebConfigurer implements ServletContextInitializer {
         config.addAllowedHeader("*"); // Permite todos os cabeçalhos
         config.addAllowedMethod("*"); // Permite todos os métodos (GET, POST, etc.)
         source.registerCorsConfiguration("/api/**", config);
+        source.registerCorsConfiguration("/api/v1", config);
+        source.registerCorsConfiguration("/api/v1/**", config);
         source.registerCorsConfiguration("/management/**", config);
         source.registerCorsConfiguration("/v2/api-docs", config);
         source.registerCorsConfiguration("/v3/api-docs", config);

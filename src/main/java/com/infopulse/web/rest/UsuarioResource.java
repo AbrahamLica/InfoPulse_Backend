@@ -1,6 +1,9 @@
 package com.infopulse.web.rest;
 
+import com.infopulse.domain.Usuario;
+import com.infopulse.repository.UserRepository;
 import com.infopulse.repository.UsuarioRepository;
+import com.infopulse.service.UserService;
 import com.infopulse.service.UsuarioQueryService;
 import com.infopulse.service.UsuarioService;
 import com.infopulse.service.criteria.UsuarioCriteria;
@@ -30,7 +33,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for managing {@link com.infopulse.domain.Usuario}.
  */
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/api")
 public class UsuarioResource {
 
     private static final Logger log = LoggerFactory.getLogger(UsuarioResource.class);
@@ -55,42 +58,43 @@ public class UsuarioResource {
     /**
      * {@code POST  /usuarios} : Create a new usuario.
      *
-     * @param usuarioDTO the usuarioDTO to create.
+     * @param usuario the usuarioDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new usuarioDTO, or with status {@code 400 (Bad Request)} if the usuario has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("")
-    public ResponseEntity<UsuarioDTO> createUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) throws URISyntaxException {
-        log.debug("REST request to save Usuario : {}", usuarioDTO);
-        if (usuarioDTO.getId() != null) {
+    @PostMapping("/usuarios")
+    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) throws URISyntaxException {
+        log.debug("REST request to save Usuario : {}", usuario);
+        if (usuario.getId() != null) {
             throw new BadRequestAlertException("A new usuario cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        usuarioDTO = usuarioService.save(usuarioDTO);
-        return ResponseEntity.created(new URI("/api/usuarios/" + usuarioDTO.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, usuarioDTO.getId().toString()))
-            .body(usuarioDTO);
+        Usuario result = usuarioService.save(usuario);
+
+        return ResponseEntity.created(new URI("/api/usuarios/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .body(result);
     }
 
     /**
      * {@code PUT  /usuarios/:id} : Updates an existing usuario.
      *
      * @param id the id of the usuarioDTO to save.
-     * @param usuarioDTO the usuarioDTO to update.
+     * @param usuario the usuarioDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated usuarioDTO,
      * or with status {@code 400 (Bad Request)} if the usuarioDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the usuarioDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> updateUsuario(
+    @PutMapping("/usuarios/{id}")
+    public ResponseEntity<Usuario> updateUsuario(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody UsuarioDTO usuarioDTO
+        @Valid @RequestBody Usuario usuario
     ) throws URISyntaxException {
-        log.debug("REST request to update Usuario : {}, {}", id, usuarioDTO);
-        if (usuarioDTO.getId() == null) {
+        log.debug("REST request to update Usuario : {}, {}", id, usuario);
+        if (usuario.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, usuarioDTO.getId())) {
+        if (!Objects.equals(id, usuario.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -98,33 +102,33 @@ public class UsuarioResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        usuarioDTO = usuarioService.update(usuarioDTO);
+        usuario = usuarioService.save(usuario);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, usuarioDTO.getId().toString()))
-            .body(usuarioDTO);
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, usuario.getId().toString()))
+            .body(usuario);
     }
 
     /**
      * {@code PATCH  /usuarios/:id} : Partial updates given fields of an existing usuario, field will ignore if it is null
      *
      * @param id the id of the usuarioDTO to save.
-     * @param usuarioDTO the usuarioDTO to update.
+     * @param usuario the usuarioDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated usuarioDTO,
      * or with status {@code 400 (Bad Request)} if the usuarioDTO is not valid,
      * or with status {@code 404 (Not Found)} if the usuarioDTO is not found,
      * or with status {@code 500 (Internal Server Error)} if the usuarioDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<UsuarioDTO> partialUpdateUsuario(
+    @PatchMapping(value = "/usuarios/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    public ResponseEntity<Usuario> partialUpdateUsuario(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody UsuarioDTO usuarioDTO
+        @NotNull @RequestBody Usuario usuario
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Usuario partially : {}, {}", id, usuarioDTO);
-        if (usuarioDTO.getId() == null) {
+        log.debug("REST request to partial update Usuario partially : {}, {}", id, usuario);
+        if (usuario.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, usuarioDTO.getId())) {
+        if (!Objects.equals(id, usuario.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -132,11 +136,11 @@ public class UsuarioResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<UsuarioDTO> result = usuarioService.partialUpdate(usuarioDTO);
+        Optional<Usuario> result = usuarioService.partialUpdate(usuario);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, usuarioDTO.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, usuario.getId().toString())
         );
     }
 
@@ -147,7 +151,7 @@ public class UsuarioResource {
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of usuarios in body.
      */
-    @GetMapping("")
+    @GetMapping("/usuarios")
     public ResponseEntity<List<UsuarioDTO>> getAllUsuarios(
         UsuarioCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
@@ -165,7 +169,7 @@ public class UsuarioResource {
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
-    @GetMapping("/count")
+    @GetMapping("/usuarios/count")
     public ResponseEntity<Long> countUsuarios(UsuarioCriteria criteria) {
         log.debug("REST request to count Usuarios by criteria: {}", criteria);
         return ResponseEntity.ok().body(usuarioQueryService.countByCriteria(criteria));
@@ -177,11 +181,11 @@ public class UsuarioResource {
      * @param id the id of the usuarioDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the usuarioDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> getUsuario(@PathVariable("id") Long id) {
+    @GetMapping("/usuarios/{id}")
+    public ResponseEntity<Usuario> getUsuario(@PathVariable("id") Long id) {
         log.debug("REST request to get Usuario : {}", id);
-        Optional<UsuarioDTO> usuarioDTO = usuarioService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(usuarioDTO);
+        Optional<Usuario> usuario = usuarioService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(usuario);
     }
 
     /**
@@ -190,7 +194,7 @@ public class UsuarioResource {
      * @param id the id of the usuarioDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<Void> deleteUsuario(@PathVariable("id") Long id) {
         log.debug("REST request to delete Usuario : {}", id);
         usuarioService.delete(id);

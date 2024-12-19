@@ -1,5 +1,7 @@
 package com.infopulse.service.dto;
 
+import com.infopulse.domain.User;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -32,12 +34,23 @@ public class UsuarioDTO implements Serializable {
     @NotNull
     private Instant dataCadastro;
 
+    @JoinColumn(unique = true)
+    private User user;
+
     @Lob
     private byte[] imagem;
 
     private String imagemContentType;
 
     private NoticiaDTO noticias;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getId() {
         return id;

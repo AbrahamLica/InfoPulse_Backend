@@ -11,11 +11,13 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface NoticiaMapper extends EntityMapper<NoticiaDTO, Noticia> {
-    @Mapping(target = "categoria", source = "categoria", qualifiedByName = "categoriaId")
+    @Mapping(target = "categoria", source = "categoria") // Remova qualifiedByName, assim traz todos os dados
     NoticiaDTO toDto(Noticia s);
 
     @Named("categoriaId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nome", source = "nome") // Adicione todos os campos necessários
+    @Mapping(target = "descricao", source = "descricao")
     CategoriaDTO toDtoCategoriaId(Categoria categoria);
 }

@@ -56,7 +56,24 @@ public class Usuario implements Serializable {
     @JsonIgnoreProperties(value = { "categoria", "autors" }, allowSetters = true)
     private Noticia noticias;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public Usuario user(User user) {
+        this.setUser(user);
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getId() {
         return this.id;

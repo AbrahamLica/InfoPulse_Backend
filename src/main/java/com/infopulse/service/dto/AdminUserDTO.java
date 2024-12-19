@@ -51,6 +51,16 @@ public class AdminUserDTO implements Serializable {
 
     private Set<String> authorities;
 
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public AdminUserDTO() {
         // Empty constructor needed for Jackson.
     }

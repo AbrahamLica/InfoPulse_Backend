@@ -6,6 +6,7 @@ import com.infopulse.service.NoticiaService;
 import com.infopulse.service.criteria.NoticiaCriteria;
 import com.infopulse.service.dto.NoticiaDTO;
 import com.infopulse.web.rest.errors.BadRequestAlertException;
+import com.infopulse.web.rest.errors.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -184,16 +186,25 @@ public class NoticiaResource {
         return ResponseUtil.wrapOrNotFound(noticiaDTO);
     }
 
-    /**
-     * {@code DELETE  /noticias/:id} : delete the "id" noticia.
-     *
-     * @param id the id of the noticiaDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNoticia(@PathVariable("id") Long id) {
         log.debug("REST request to delete Noticia : {}", id);
-        noticiaService.delete(id);
+        try {
+            noticiaService.delete(id);
+        } catch (DataIntegrityViolationException ex) {
+            log.error("Cannot delete Noticia with id {}: it is referenced by another entity", id, ex);
+
+            //            String detailMessage = ex.getMostSpecificCause().getMessage();
+            //            String formattedMessage = formatConstraintViolationMessage(detailMessage);
+            //            String message = ex.getMessage();
+            //            String tableName = extractTableName(message);
+
+            throw new ConstraintViolationException(
+                "Não é possível excluir o registro porque ele está sendo referenciado em outra tabela.",
+                "Noticia",
+                "constraint_violation"
+            );
+        }
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
