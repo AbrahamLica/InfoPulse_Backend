@@ -2,8 +2,11 @@ package com.infopulse.service;
 
 import com.infopulse.domain.Usuario;
 import java.util.Optional;
+
+import com.infopulse.service.dto.UserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 
 /**
  * Service Interface for managing {@link Usuario}.
@@ -47,4 +50,5 @@ public interface UsuarioService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
 }

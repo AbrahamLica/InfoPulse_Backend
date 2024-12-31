@@ -53,14 +53,6 @@ public class AdminUserDTO implements Serializable {
 
     private String password;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public AdminUserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -79,6 +71,7 @@ public class AdminUserDTO implements Serializable {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+        this.password = user.getPassword();
     }
 
     public Long getId() {
@@ -91,6 +84,14 @@ public class AdminUserDTO implements Serializable {
 
     public String getLogin() {
         return login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setLogin(String login) {

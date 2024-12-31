@@ -4,13 +4,16 @@ import static com.infopulse.security.SecurityUtils.AUTHORITIES_KEY;
 import static com.infopulse.security.SecurityUtils.JWT_ALGORITHM;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.infopulse.domain.Usuario;
 import com.infopulse.service.UserService;
+import com.infopulse.service.UsuarioService;
 import com.infopulse.service.dto.UserDTO;
 import com.infopulse.web.rest.vm.LoginVM;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +42,9 @@ public class AuthenticateController {
     private static final Logger log = LoggerFactory.getLogger(AuthenticateController.class);
 
     private final JwtEncoder jwtEncoder;
+
+    private final UsuarioService usuarioService;
+
     private final UserService userService; // Injetar UserService para acessar dados do usuário
 
     @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds:0}")
@@ -52,11 +58,13 @@ public class AuthenticateController {
     public AuthenticateController(
         JwtEncoder jwtEncoder,
         AuthenticationManagerBuilder authenticationManagerBuilder,
-        UserService userService
+        UserService userService,
+        UsuarioService usuarioService
     ) {
         this.jwtEncoder = jwtEncoder;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.userService = userService;
+        this.usuarioService = usuarioService;
     }
 
     @PostMapping("/authenticate")
@@ -66,27 +74,40 @@ public class AuthenticateController {
             loginVM.getPassword()
         );
 
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
 
-        // Gera o JWT token
-        String jwt = this.createToken(authentication, loginVM.isRememberMe());
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = this.createToken(authentication, loginVM.isRememberMe());
 
-        // Pega os dados do usuário autenticado
-        String username = authentication.getName();
-        UserDTO userDTO = userService.getUserWithAuthoritiesByLogin(username).map(UserDTO::new).orElseThrow(); // Busca o UserDTO
+            String username = authentication.getName();
 
-        String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
 
-        // Adiciona o token no header
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setBearerAuth(jwt);
+            Optional<UserDTO> userOptional = userService.getUserWithAuthoritiesByLogin(username).map(UserDTO::new);
+//            if (userOptional.isEmpty()) {
+//                log.error("Usuário não encontrado no banco de dados: {}", username);
+//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//            }
+            UserDTO userDTO = userOptional.orElseThrow(() -> new RuntimeException("Usuário não encontrado no banco de dados: " + username));
 
-        // Cria a resposta com o token e os dados do usuário
-        UserTokenResponse userTokenResponse = new UserTokenResponse(jwt, userDTO);
+            log.info("Dados do usuário autenticado: {}", userDTO);
 
-        return new ResponseEntity<>(userTokenResponse, httpHeaders, HttpStatus.OK);
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setBearerAuth(jwt);
+
+
+            UserTokenResponse userTokenResponse = new UserTokenResponse(jwt, userDTO);
+            log.info("Resposta de autenticação criada com sucesso para o usuário: {}", username);
+
+            return new ResponseEntity<>(userTokenResponse, httpHeaders, HttpStatus.OK);
+
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
+
 
     @GetMapping("/authenticate")
     public String isAuthenticated(HttpServletRequest request) {
@@ -122,7 +143,7 @@ public class AuthenticateController {
     static class UserTokenResponse {
 
         private String idToken;
-        private UserDTO user; // Agora inclui UserDTO
+        private UserDTO user;
 
         UserTokenResponse(String idToken, UserDTO user) {
             this.idToken = idToken;

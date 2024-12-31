@@ -143,8 +143,11 @@ public class UserService {
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+
+        String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
         user.setPassword(encryptedPassword);
+
+
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
@@ -183,15 +186,15 @@ public class UserService {
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
-                Set<Authority> managedAuthorities = user.getAuthorities();
-                managedAuthorities.clear();
-                userDTO
-                    .getAuthorities()
-                    .stream()
-                    .map(authorityRepository::findById)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .forEach(managedAuthorities::add);
+//                Set<Authority> managedAuthorities = user.getAuthorities();
+//                managedAuthorities.clear();
+//                userDTO
+//                    .getAuthorities()
+//                    .stream()
+//                    .map(authorityRepository::findById)
+//                    .filter(Optional::isPresent)
+//                    .map(Optional::get)
+//                    .forEach(managedAuthorities::add);
                 userRepository.save(user);
                 log.debug("Changed Information for User: {}", user);
                 return user;

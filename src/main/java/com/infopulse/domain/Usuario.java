@@ -28,21 +28,22 @@ public class Usuario implements Serializable {
     private String nome;
 
     @NotNull
+    @Size(min = 2)
+    @Column(name = "login", nullable = false)
+    private String login;
+
+    @NotNull
     @Pattern(regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")
     @Column(name = "email", nullable = false)
     private String email;
 
-    @NotNull
-    @Size(min = 5)
-    @Column(name = "senha", nullable = false)
+    @Column(name = "senha")
     private String senha;
 
-    @NotNull
-    @Column(name = "ativo", nullable = false)
+    @Column(name = "ativo")
     private Boolean ativo;
 
-    @NotNull
-    @Column(name = "data_cadastro", nullable = false)
+    @Column(name = "data_cadastro")
     private Instant dataCadastro;
 
     @Lob
@@ -99,6 +100,19 @@ public class Usuario implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public Usuario login(String login) {
+        this.setLogin(login);
+        return this;
     }
 
     public String getEmail() {

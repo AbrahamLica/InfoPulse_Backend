@@ -51,6 +51,10 @@ public class UsuarioServiceImpl implements UsuarioService {
                     existingUsuario.setAtivo(usuario.getAtivo());
                 }
 
+                if (usuario.getLogin() != null) {
+                    existingUsuario.setLogin(usuario.getLogin());
+                }
+
                 return existingUsuario;
             })
             .map(usuarioRepository::save);

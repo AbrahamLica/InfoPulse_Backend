@@ -21,21 +21,20 @@ public class UsuarioDTO implements Serializable {
     private String nome;
 
     @NotNull
+    @Size(min = 2)
+    private String login;
+
+    @NotNull
     @Pattern(regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")
     private String email;
 
-    @NotNull
-    @Size(min = 5)
     private String senha;
 
-    @NotNull
     private Boolean ativo;
 
-    @NotNull
     private Instant dataCadastro;
 
-    @JoinColumn(unique = true)
-    private User user;
+    private UserDTO user;
 
     @Lob
     private byte[] imagem;
@@ -44,11 +43,11 @@ public class UsuarioDTO implements Serializable {
 
     private NoticiaDTO noticias;
 
-    public User getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 
@@ -66,6 +65,14 @@ public class UsuarioDTO implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getEmail() {

@@ -36,7 +36,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api")
 public class UsuarioResource {
 
-    private static final Logger log = LoggerFactory.getLogger(UsuarioResource.class);
+    protected static final Logger log = LoggerFactory.getLogger(UsuarioResource.class);
 
     private static final String ENTITY_NAME = "usuario";
 

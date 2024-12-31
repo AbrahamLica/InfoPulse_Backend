@@ -31,7 +31,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/infopulse
     username: postgres
-    password: postgre123
+    password: postgre
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -41,8 +41,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: abrahamlica451@gmail.com
-    password: godaboveall123@
+    username:
+    password:
     properties:
       mail:
         smtp:
