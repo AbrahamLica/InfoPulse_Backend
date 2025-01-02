@@ -1,14 +1,26 @@
-# Usar uma imagem oficial do Java como base
-FROM eclipse-temurin:17-jdk-alpine
+# Use a imagem do Maven como base para construir a aplicação
+FROM maven:3.8.6-openjdk-17-slim AS build
 
-# Configurar o diretório de trabalho no container
+# Defina o diretório de trabalho
 WORKDIR /app
 
-# Copiar o arquivo JAR gerado pelo Maven/Gradle para o container
-COPY target/*.jar app.jar
+# Copie os arquivos do projeto
+COPY . .
 
-# Expor a porta que sua aplicação usa
+# Compile o projeto e gere o JAR
+RUN mvn clean install -DskipTests
+
+# Use a imagem do OpenJDK para rodar a aplicação
+FROM openjdk:17-jdk-alpine
+
+# Defina o diretório de trabalho
+WORKDIR /app
+
+# Copie o JAR gerado pelo Maven
+COPY --from=build /app/target/*.jar app.jar
+
+# Exponha a porta
 EXPOSE 8080
 
 # Comando para rodar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
