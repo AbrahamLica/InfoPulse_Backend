@@ -30,8 +30,8 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/infopulse
-    username: postgres
-    password: postgre
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgre}
     hikari:
       poolName: Hikari
       auto-commit: false

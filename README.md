@@ -1,161 +1,155 @@
-# InfoPulse
+[JAVASCRIPT__BADGE]: https://img.shields.io/badge/Javascript-000?style=for-the-badge&logo=javascript
+[TYPESCRIPT__BADGE]: https://img.shields.io/badge/typescript-D4FAFF?style=for-the-badge&logo=typescript
+[EXPRESS__BADGE]: https://img.shields.io/badge/express-005CFE?style=for-the-badge&logo=express
+[VUE__BADGE]: https://img.shields.io/badge/VueJS-fff?style=for-the-badge&logo=vue
+[NEST__BADGE]: https://img.shields.io/badge/nest-7026b9?style=for-the-badge&logo=nest
+[GRAPHQL__BADGE]: https://img.shields.io/badge/GraphQL-e10098?style=for-the-badge&logo=graphql
+[JAVA_BADGE]: https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white
+[SPRING_BADGE]: https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white
+[MONGO_BADGE]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
+[AWS_BADGE]: https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white
+[JHIPSTER_BADGE]: https://img.shields.io/badge/JHIPSTER-white?logo=jhipster
+[POSTGRE_BADGE]: https://img.shields.io/badge/PostgreSQL-white?logo=postgresql
+[SPRINGBOOT_BADGE]: https://img.shields.io/badge/SpringBoot-white?logo=springboot
 
-This application was generated using JHipster 8.6.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v8.6.0](https://www.jhipster.tech/documentation-archive/v8.6.0).
+<h1 align="center" style="font-weight: bold;">InfoPulse 💻</h1>
 
-## Project Structure
+![java][JAVA_BADGE]
+![spring][SPRING_BADGE]
+![SPRINGBOOT][SPRINGBOOT_BADGE]
+![JHIPSTER][JHIPSTER_BADGE]
+![POSTGRESQL][POSTGRE_BADGE]
 
-Node is required for generation and recommended for development. `package.json` is always generated for a better development experience with prettier, commit hooks, scripts and so on.
+<p align="center">
+ <a href="#started">Getting Started</a> • 
+  <a href="#routes">API Endpoints</a> •
+ <a href="#colab">Collaborators</a> •
+ <a href="#contribute">Contribute</a>
+</p>
 
-In the project root, JHipster generates configuration files for tools like git, prettier, eslint, husky, and others that are well known and you can find references in the web.
+<p align="center">
+  <b>📰 InfoPulse - Your Web News System</b>
+</p>
 
-`/src/*` structure follows default Java structure.
+<h3>Prerequisites</h3>
 
-- `.yo-rc.json` - Yeoman configuration file
-  JHipster configuration is stored in this file at `generator-jhipster` key. You may find `generator-jhipster-*` for specific blueprints configuration.
-- `.yo-resolve` (optional) - Yeoman conflict resolver
-  Allows to use a specific action when conflicts are found skipping prompts for files that matches a pattern. Each line should match `[pattern] [action]` with pattern been a [Minimatch](https://github.com/isaacs/minimatch#minimatch) pattern and action been one of skip (default if omitted) or force. Lines starting with `#` are considered comments and are ignored.
-- `.jhipster/*.json` - JHipster entity configuration files
-- `/src/main/docker` - Docker configurations for the application and services that the application depends on
+Here you list all prerequisites necessary for running your project. For example:
 
-## Development
+<h2 id="started">🚀 Getting started</h2>
 
-To start your application in the dev profile, run:
+Here you describe how to run your project locally
 
-```
-./mvnw
-```
+<h3>Cloning</h3>
 
-For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
+How to clone your project
 
-## Building for production
-
-### Packaging as jar
-
-To build the final jar and optimize the InfoPulse application for production, run:
-
-```
-./mvnw -Pprod clean verify
-```
-
-To ensure everything worked, run:
-
-```
-java -jar target/*.jar
-```
-
-Refer to [Using JHipster in production][] for more details.
-
-### Packaging as war
-
-To package your application as a war in order to deploy it to an application server, run:
-
-```
-./mvnw -Pprod,war clean verify
+```bash
+git clone your-project-url-in-github
 ```
 
-### JHipster Control Center
+<h3> Environment Variables</h2>
 
-JHipster Control Center can help you manage and control your application(s). You can start a local control center server (accessible on http://localhost:7419) with:
+Use the `application.properties.example` as reference to create your configuration file `application.properties` with your AWS Credentials
 
-```
-docker compose -f src/main/docker/jhipster-control-center.yml up
-```
-
-## Testing
-
-### Spring Boot tests
-
-To launch your application's tests, run:
-
-```
-./mvnw verify
+```yaml
+aws.region=us-east-1
+aws.accessKeyId={YOUR_AWS_KEY_ID}
+aws.secretKey={YOUR_AWS_SECRET}
 ```
 
-## Others
+<h3>Starting</h3>
 
-### Code quality using Sonar
+How to start your project
 
-Sonar is used to analyse code quality. You can start a local Sonar server (accessible on http://localhost:9001) with:
-
-```
-docker compose -f src/main/docker/sonar.yml up -d
-```
-
-Note: we have turned off forced authentication redirect for UI in [src/main/docker/sonar.yml](src/main/docker/sonar.yml) for out of the box experience while trying out SonarQube, for real use cases turn it back on.
-
-You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the maven plugin.
-
-Then, run a Sonar analysis:
-
-```
-./mvnw -Pprod clean verify sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
+```bash
+cd project-name
+npm some-command-to-run
 ```
 
-If you need to re-run the Sonar phase, please be sure to specify at least the `initialize` phase since Sonar properties are loaded from the sonar-project.properties file.
+<h2 id="routes">📍 API Endpoints</h2>
 
-```
-./mvnw initialize sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
-```
+Here you can list the main routes of your API, and what are their expected request bodies.
+​
+| route | description  
+|----------------------|-----------------------------------------------------
+| <kbd>GET /authenticate</kbd> | retrieves user info see [response details](#get-auth-detail)
+| <kbd>POST /authenticate</kbd> | authenticate user into the api see [request details](#post-auth-detail)
 
-Additionally, Instead of passing `sonar.password` and `sonar.login` as CLI arguments, these parameters can be configured from [sonar-project.properties](sonar-project.properties) as shown below:
+<h3 id="get-auth-detail">GET /authenticate</h3>
 
-```
-sonar.login=admin
-sonar.password=admin
-```
+**RESPONSE**
 
-For more information, refer to the [Code quality page][].
-
-### Using Docker to simplify development (optional)
-
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
-
-For example, to start a postgresql database in a docker container, run:
-
-```
-docker compose -f src/main/docker/postgresql.yml up -d
+```json
+{
+  "name": "Fernanda Kipper",
+  "age": 20,
+  "email": "her-email@gmail.com"
+}
 ```
 
-To stop it and remove the container, run:
+<h3 id="post-auth-detail">POST /authenticate</h3>
 
-```
-docker compose -f src/main/docker/postgresql.yml down
-```
+**REQUEST**
 
-You can also fully dockerize your application and all the services that it depends on.
-To achieve this, first build a docker image of your app by running:
-
-```
-npm run java:docker
+```json
+{
+  "username": "fernandakipper",
+  "password": "4444444"
+}
 ```
 
-Or build a arm64 docker image when using an arm64 processor os like MacOS with M1 processor family running:
+**RESPONSE**
 
-```
-npm run java:docker:arm64
-```
-
-Then run:
-
-```
-docker compose -f src/main/docker/app.yml up -d
+```json
+{
+  "token": "OwoMRHsaQwyAgVoc3OXmL1JhMVUYXGGBbCTK0GBgiYitwQwjf0gVoBmkbuyy0pSi"
+}
 ```
 
-When running Docker Desktop on MacOS Big Sur or later, consider enabling experimental `Use the new Virtualization framework` for better processing performance ([disk access performance is worse](https://github.com/docker/roadmap/issues/7)).
+<h2 id="colab">🤝 Collaborators</h2>
 
-For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
+Special thank you for all people that contributed for this project.
 
-## Continuous Integration (optional)
+<table>
+  <tr>
+    <td align="center">
+      <a href="#">
+        <img src="https://avatars.githubusercontent.com/u/61896274?v=4" width="100px;" alt="Fernanda Kipper Profile Picture"/><br>
+        <sub>
+          <b>Fernanda Kipper</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="#">
+        <img src="https://t.ctcdn.com.br/n7eZ74KAcU3iYwnQ89-ul9txVxc=/400x400/smart/filters:format(webp)/i490769.jpeg" width="100px;" alt="Elon Musk Picture"/><br>
+        <sub>
+          <b>Elon Musk</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="#">
+        <img src="https://miro.medium.com/max/360/0*1SkS3mSorArvY9kS.jpg" width="100px;" alt="Foto do Steve Jobs"/><br>
+        <sub>
+          <b>Steve Jobs</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
 
-To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
+<h2 id="contribute">📫 Contribute</h2>
 
-[JHipster Homepage and latest documentation]: https://www.jhipster.tech
-[JHipster 8.6.0 archive]: https://www.jhipster.tech/documentation-archive/v8.6.0
-[Using JHipster in development]: https://www.jhipster.tech/documentation-archive/v8.6.0/development/
-[Using Docker and Docker-Compose]: https://www.jhipster.tech/documentation-archive/v8.6.0/docker-compose
-[Using JHipster in production]: https://www.jhipster.tech/documentation-archive/v8.6.0/production/
-[Running tests page]: https://www.jhipster.tech/documentation-archive/v8.6.0/running-tests/
-[Code quality page]: https://www.jhipster.tech/documentation-archive/v8.6.0/code-quality/
-[Setting up Continuous Integration]: https://www.jhipster.tech/documentation-archive/v8.6.0/setting-up-ci/
-[Node.js]: https://nodejs.org/
-[NPM]: https://www.npmjs.com/
+Here you will explain how other developers can contribute to your project. For example, explaining how can create their branches, which patterns to follow and how to open an pull request
+
+1. `git clone https://github.com/Fernanda-Kipper/text-editor.git`
+2. `git checkout -b feature/NAME`
+3. Follow commit patterns
+4. Open a Pull Request explaining the problem solved or feature made, if exists, append screenshot of visual modifications and wait for the review!
+
+<h3>Documentations that might help</h3>
+
+[📝 How to create a Pull Request](https://www.atlassian.com/br/git/tutorials/making-a-pull-request)
+
+[💾 Commit pattern](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
