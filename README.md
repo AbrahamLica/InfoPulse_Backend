@@ -25,16 +25,34 @@
   <a href="#routes">📍 API Endpoints</a> •
  <a href="#colab">🤝 Collaborators</a> •
 </p>
+<br>
+ If you are looking for the PT-BR version, <a href="https://github.com/AbrahamLica/InfoPulse_Backend/blob/master/README_PTBR.md">click here</a>
 
 <p align="center">
   <b>📰 InfoPulse - Your Web News System</b>
 </p>
 
-<h3>Prerequisites</h3>
+<h2>📖 About</h2>
+
+This is a **Web News System** that allows users to **create, read, update, and delete news articles** (CRUD), manage categories, and access additional features. 📚 The project was developed to enhance and showcase my skills as a **Fullstack Developer**. 🚀
+
+In addition, this system integrates with an external API called <a href="https://worldnewsapi.com/" target="_blank">World News API</a>, which allows the system to display global news that was not added by users of the platform. This feature ensures that the system is not limited to locally added news but also provides users with access to worldwide news. 🌍
+
+<h2>🛠️ Built With</h2>
+
+This project was developed with the following technologies:
+
+- ☕ **Java** – The primary programming language used to develop the backend logic of the application, ensuring scalability and robustness.  
+- 🚀 **Spring Boot** – Provides the framework for building a RESTful API, enabling the development of fast and secure server-side operations.  
+- 🛠️ **JHipster** – Used to quickly generate and scaffold the project, streamlining the initial setup and offering powerful tools for development.  
+- 🗄️ **PostgreSQL** – A reliable relational database system used for storing and managing all application data efficiently.  
+- 🔄 **Liquibase** – Facilitates database version control and schema management, ensuring seamless updates and migrations.  
+
+<h3>📋 Prerequisites</h3>
 
 🛠 Required Tools:
 
-Java Development Kit (JDK) 17
+Java Development Kit (JDK) 17 <br>
 PostgreSQL 17
 
 <h2 id="started">🚀 Getting started</h2>
@@ -195,3 +213,29 @@ mvn spring-boot:run
 
 - Use the correct HTTP methods as specified in each route.
 - Replace `{id}` with the appropriate resource ID in the URL.
+
+
+<h2>👥 Authors & contributors</h2>
+
+The original setup of this repository is by [Abraham Melquisedeque Pereira Licá](https://github.com/AbrahamLica).
+
+The original setup of this repository is by
+
+<div align="center">
+  <img src="src/assets/me.jpg" alt="Abraham Melquisedeque Pereira Licá" style="border-radius: 50%; width: 200px; object-fit: cover;">
+  <br>
+  Abraham Melquisedeque Pereira Licá
+</div>
+
+<h2>🔒 Security</h2>
+
+InfoPulse follows good practices of security, but 100% security cannot be assured.
+InfoPulse is provided "as is" without any warranty. Use at your own risk. ⚠️
+
+_For more information and to report security issues, please refer to our [security documentation](docs/SECURITY.md)._
+
+<h2>📜 License</h2>
+
+This project is licensed under the **MIT license**. 📜
+
+See [LICENSE](LICENSE) for more information.
