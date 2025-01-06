@@ -21,10 +21,9 @@
 ![POSTGRESQL][POSTGRE_BADGE]
 
 <p align="center">
- <a href="#started">Getting Started</a> • 
-  <a href="#routes">API Endpoints</a> •
- <a href="#colab">Collaborators</a> •
- <a href="#contribute">Contribute</a>
+ <a href="#started">🚀 Getting Started</a> • 
+  <a href="#routes">📍 API Endpoints</a> •
+ <a href="#colab">🤝 Collaborators</a> •
 </p>
 
 <p align="center">
@@ -33,123 +32,166 @@
 
 <h3>Prerequisites</h3>
 
-Here you list all prerequisites necessary for running your project. For example:
+🛠 Required Tools:
+
+Java Development Kit (JDK) 17
+PostgreSQL 17
 
 <h2 id="started">🚀 Getting started</h2>
 
-Here you describe how to run your project locally
-
-<h3>Cloning</h3>
-
-How to clone your project
+1️⃣ Clone the Project
 
 ```bash
-git clone your-project-url-in-github
+git clone https://github.com/AbrahamLica/InfoPulse_Backend.git
 ```
 
-<h3> Environment Variables</h2>
-
-Use the `application.properties.example` as reference to create your configuration file `application.properties` with your AWS Credentials
-
-```yaml
-aws.region=us-east-1
-aws.accessKeyId={YOUR_AWS_KEY_ID}
-aws.secretKey={YOUR_AWS_SECRET}
-```
-
-<h3>Starting</h3>
-
-How to start your project
+2️⃣ Create the Database
+Log into PostgreSQL via the terminal and create a database named infopulse:
 
 ```bash
-cd project-name
-npm some-command-to-run
+CREATE DATABASE infopulse;
+```
+
+3️⃣ Configure Database Credentials
+Set your PostgreSQL credentials via environment variables (DB_USERNAME and DB_PASSWORD) or update application-dev.yml directly.
+
+4️⃣ Build the Project
+From the project root directory (where pom.xml is located), run:
+
+```bash
+mvn clean install
+```
+
+5️⃣ Start the Application
+Run the application using Maven:
+
+```bash
+mvn spring-boot:run
 ```
 
 <h2 id="routes">📍 API Endpoints</h2>
 
-Here you can list the main routes of your API, and what are their expected request bodies.
-​
-| route | description  
-|----------------------|-----------------------------------------------------
-| <kbd>GET /authenticate</kbd> | retrieves user info see [response details](#get-auth-detail)
-| <kbd>POST /authenticate</kbd> | authenticate user into the api see [request details](#post-auth-detail)
+| Route                             | Description                                                                |
+| --------------------------------- | -------------------------------------------------------------------------- |
+| <kbd>GET</kbd> /api/authenticate  | Retrieves user info. See [response details](#get-auth-detail).             |
+| <kbd>POST</kbd> /api/authenticate | Authenticates user into the API. See [request details](#post-auth-detail). |
 
-<h3 id="get-auth-detail">GET /authenticate</h3>
-
-**RESPONSE**
+**Example (POST /api/authenticate):**
 
 ```json
 {
-  "name": "Fernanda Kipper",
-  "age": 20,
-  "email": "her-email@gmail.com"
+  "username": "User's username for authentication",
+  "password": "User's password"
 }
 ```
 
-<h3 id="post-auth-detail">POST /authenticate</h3>
+---
 
-**REQUEST**
+### 👤 **Users**
+
+| Route                                  | Description               |
+| -------------------------------------- | ------------------------- |
+| <kbd>GET</kbd> /api/usuarios           | Retrieves all users.      |
+| <kbd>POST</kbd> /api/v1/usuarios       | Creates a new user.       |
+| <kbd>PATCH</kbd> /api/v1/usuarios/{id} | Updates an existing user. |
+
+**Example (POST /api/v1/usuarios):**
 
 ```json
 {
-  "username": "fernandakipper",
-  "password": "4444444"
+  "nome": "User's name",
+  "login": "User's login",
+  "email": "User's email (must match [^@\\s]+@[^@\\s]+\\.[^@\\s]+$)",
+  "senha": "User's password"
 }
 ```
 
-**RESPONSE**
+**Example (PATCH /api/v1/usuarios/{id}):**
 
 ```json
 {
-  "token": "OwoMRHsaQwyAgVoc3OXmL1JhMVUYXGGBbCTK0GBgiYitwQwjf0gVoBmkbuyy0pSi"
+  "id": 1,
+  "nome": "New user name",
+  "email": "newemail@example.com",
+  "login": "new_user_login",
+  "user": { "id": 1 },
+  "ativo": true
 }
 ```
 
-<h2 id="colab">🤝 Collaborators</h2>
+---
 
-Special thank you for all people that contributed for this project.
+### 🗂 **Categories**
 
-<table>
-  <tr>
-    <td align="center">
-      <a href="#">
-        <img src="https://avatars.githubusercontent.com/u/61896274?v=4" width="100px;" alt="Fernanda Kipper Profile Picture"/><br>
-        <sub>
-          <b>Fernanda Kipper</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="#">
-        <img src="https://t.ctcdn.com.br/n7eZ74KAcU3iYwnQ89-ul9txVxc=/400x400/smart/filters:format(webp)/i490769.jpeg" width="100px;" alt="Elon Musk Picture"/><br>
-        <sub>
-          <b>Elon Musk</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="#">
-        <img src="https://miro.medium.com/max/360/0*1SkS3mSorArvY9kS.jpg" width="100px;" alt="Foto do Steve Jobs"/><br>
-        <sub>
-          <b>Steve Jobs</b>
-        </sub>
-      </a>
-    </td>
-  </tr>
-</table>
+| Route                                  | Description                   |
+| -------------------------------------- | ----------------------------- |
+| <kbd>GET</kbd> /api/categorias         | Retrieves all categories.     |
+| <kbd>POST</kbd> /api/categorias        | Creates a new category.       |
+| <kbd>PUT</kbd> /api/categorias/{id}    | Updates an existing category. |
+| <kbd>DELETE</kbd> /api/categorias/{id} | Deletes a category by ID.     |
 
-<h2 id="contribute">📫 Contribute</h2>
+**Example (POST /api/categorias):**
 
-Here you will explain how other developers can contribute to your project. For example, explaining how can create their branches, which patterns to follow and how to open an pull request
+```json
+{
+  "nome": "Category name",
+  "descricao": "Category description"
+}
+```
 
-1. `git clone https://github.com/Fernanda-Kipper/text-editor.git`
-2. `git checkout -b feature/NAME`
-3. Follow commit patterns
-4. Open a Pull Request explaining the problem solved or feature made, if exists, append screenshot of visual modifications and wait for the review!
+**Example (PUT /api/categorias/{id}):**
 
-<h3>Documentations that might help</h3>
+```json
+{
+  "id": "Category ID to update",
+  "nome": "Updated category name",
+  "descricao": "Updated category description"
+}
+```
 
-[📝 How to create a Pull Request](https://www.atlassian.com/br/git/tutorials/making-a-pull-request)
+---
 
-[💾 Commit pattern](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
+### 📰 **News**
+
+| Route                                | Description                       |
+| ------------------------------------ | --------------------------------- |
+| <kbd>GET</kbd> /api/noticias         | Retrieves all news articles.      |
+| <kbd>POST</kbd> /api/noticias        | Creates a new news article.       |
+| <kbd>PUT</kbd> /api/noticias/{id}    | Updates an existing news article. |
+| <kbd>DELETE</kbd> /api/noticias/{id} | Deletes a news article by ID.     |
+
+**Example (POST /api/noticias):**
+
+```json
+{
+  "titulo": "News title (min 5 characters)",
+  "conteudo": "Full news content",
+  "resumo": "News summary",
+  "dataPublicacao": "ISO 8601 format date",
+  "autor": "Author (min 2 characters)",
+  "ativo": true,
+  "categoria": { "id": "Category ID" }
+}
+```
+
+**Example (PUT /api/noticias/{id}):**
+
+```json
+{
+  "id": "News ID to update",
+  "titulo": "Updated news title",
+  "conteudo": "Updated full content",
+  "resumo": "Updated summary",
+  "dataPublicacao": "Updated ISO 8601 format date",
+  "autor": "Updated author",
+  "ativo": true,
+  "categoria": { "id": "Category ID" }
+}
+```
+
+---
+
+### 🔧 Notes
+
+- Use the correct HTTP methods as specified in each route.
+- Replace `{id}` with the appropriate resource ID in the URL.

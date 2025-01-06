@@ -2,6 +2,7 @@ package com.infopulse.web.rest.v1;
 
 import com.infopulse.domain.User;
 import com.infopulse.domain.Usuario;
+import com.infopulse.repository.UserRepository;
 import com.infopulse.repository.UsuarioRepository;
 import com.infopulse.service.UserService;
 import com.infopulse.service.UsernameAlreadyUsedException;
@@ -30,18 +31,20 @@ public class UsuarioResourceExtended extends UsuarioResource {
     private final UserService userService;
     private final UsuarioService usuarioService;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     public UsuarioResourceExtended(
         UsuarioService usuarioService,
         UsuarioRepository usuarioRepository,
         UsuarioQueryService usuarioQueryService,
         UserService userService,
-        PasswordEncoder passwordEncoder
+        PasswordEncoder passwordEncoder, UserRepository userRepository
     ) {
         super(usuarioService, usuarioRepository, usuarioQueryService);
         this.userService = userService;
         this.usuarioService = usuarioService;
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -78,28 +81,14 @@ public class UsuarioResourceExtended extends UsuarioResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Usuario usuario
     ) throws URISyntaxException {
-//        userService
-//            .findOneByLogin(usuario.getEmail())
-//            .ifPresent(existingUser -> {
-//                if (!existingUser.getId().equals(usuario.getUser().getId())) {
-//                    throw new UsernameAlreadyUsedException();
-//                }
-//            });
 
         AdminUserDTO jhiUser = new AdminUserDTO();
         jhiUser.setId(usuario.getUser().getId());
-
-
-
         jhiUser.setFirstName(usuario.getNome());
         jhiUser.setLastName(usuario.getNome());
         jhiUser.setActivated(Optional.ofNullable(usuario.getAtivo()).orElse(true));
         jhiUser.setEmail(usuario.getEmail());
         jhiUser.setLogin(usuario.getEmail());
-
-//        if (usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
-//            jhiUser.setPassword(usuario.getSenha());
-//        }
 
         userService.updateUser(jhiUser);
 
@@ -107,17 +96,25 @@ public class UsuarioResourceExtended extends UsuarioResource {
     }
 
     @Override
-    public ResponseEntity<Usuario> partialUpdateUsuario(
+    public ResponseEntity partialUpdateUsuario(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody Usuario usuario
     ) throws URISyntaxException {
 
+        Usuario usuarioDb = usuarioService.findOne(id)
+            .orElseThrow(() -> new BadRequestAlertException("Usuário não encontrado", ENTITY_NAME, "usernotfound"));
+
+        Long jhiUserId = usuarioDb.getUser().getId();
+        User jhiUserEntity = userRepository.findById(jhiUserId)
+            .orElseThrow(() -> new BadRequestAlertException("Usuário não encontrado", ENTITY_NAME, "usernotfound"));
+
         AdminUserDTO jhiUser = new AdminUserDTO();
-        jhiUser.setId(usuario.getUser().getId());
+        jhiUser.setId(jhiUserEntity.getId());
         jhiUser.setFirstName(usuario.getNome());
         jhiUser.setActivated(true);
         jhiUser.setEmail(usuario.getEmail());
         jhiUser.setLogin(usuario.getLogin());
+
         userService.updateUser(jhiUser);
         return super.partialUpdateUsuario(id, usuario);
     }
