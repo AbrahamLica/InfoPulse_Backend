@@ -89,8 +89,8 @@ mvn spring-boot:run
 
 | Route                             | Description                                                                |
 | --------------------------------- | -------------------------------------------------------------------------- |
-| <kbd>GET</kbd> /api/authenticate  | Recupera informações do usuário. Veja [response details](#get-auth-detail).             |
-| <kbd>POST</kbd> /api/authenticate | Autentica o usuário na API. Veja [request details](#post-auth-detail). |
+| <kbd>GET</kbd> /api/authenticate  | Recupera informações do usuário..                                          |
+| <kbd>POST</kbd> /api/authenticate | Autentica o usuário na API.                                                |
 
 **Exemplo (POST /api/authenticate):**
 

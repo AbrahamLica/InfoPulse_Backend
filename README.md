@@ -26,7 +26,8 @@
  <a href="#colab">🤝 Collaborators</a> •
 </p>
 <br>
- If you are looking for the PT-BR version, <a href="https://github.com/AbrahamLica/InfoPulse_Backend/blob/master/README_PTBR.md">click here</a>
+
+<p align="center">If you are looking for the PT-BR version, <a href="https://github.com/AbrahamLica/InfoPulse_Backend/blob/master/README_PTBR.md">click here</a></p>
 
 <p align="center">
   <b>📰 InfoPulse - Your Web News System</b>
@@ -91,8 +92,8 @@ mvn spring-boot:run
 
 | Route                             | Description                                                                |
 | --------------------------------- | -------------------------------------------------------------------------- |
-| <kbd>GET</kbd> /api/authenticate  | Retrieves user info. See [response details](#get-auth-detail).             |
-| <kbd>POST</kbd> /api/authenticate | Authenticates user into the API. See [request details](#post-auth-detail). |
+| <kbd>GET</kbd> /api/authenticate  | Retrieves user info.                                                       |
+| <kbd>POST</kbd> /api/authenticate | Authenticates user into the API.                                           |
 
 **Example (POST /api/authenticate):**
 
@@ -222,7 +223,7 @@ The original setup of this repository is by [Abraham Melquisedeque Pereira Licá
 The original setup of this repository is by
 
 <div align="center">
-  <img src="src/assets/me.jpg" alt="Abraham Melquisedeque Pereira Licá" style="border-radius: 50%; width: 200px; object-fit: cover;">
+  <img src="src/main/assets/me.jpg" alt="Abraham Melquisedeque Pereira Licá" style="border-radius: 50%; width: 200px; object-fit: cover;">
   <br>
   Abraham Melquisedeque Pereira Licá
 </div>
