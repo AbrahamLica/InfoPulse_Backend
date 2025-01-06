@@ -217,7 +217,7 @@ mvn spring-boot:run
 O setup original deste repositório é de
 
 <div align="center">
-  <img src="src/assets/me.jpg" alt="Abraham Melquisedeque Pereira Licá" style="border-radius: 50%; width: 200px; object-fit: cover;">
+  <img src="src/main/assets/me.jpg" alt="Abraham Melquisedeque Pereira Licá" style="border-radius: 50%; width: 200px; object-fit: cover;">
   <br>
   Abraham Melquisedeque Pereira Licá
 </div>
